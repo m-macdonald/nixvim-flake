@@ -8,17 +8,13 @@
 
   outputs = { self, nixvim, flake-utils }: 
     flake-utils.lib.eachDefaultSystem (system: let
-      make = { lsp }: let 
-        nixvim' = nixvim.legacyPackages."${system}";
-        modules = import ./modules { conf = lsp; };
-#        module = modules // lsp;
-      in 
-        nixvim'.makeNixvimWithModule {
-          module = modules;
-        };
+      modules = import ./modules;
+      make = import ./wrappers/make.nix;
+      hmModule = import ./wrappers/hm.nix modules;
     in {
       legacyPackages = {
         inherit make;
       };
+      inherit nixvim.homeManagerModules.nixvim;
     });
 }
