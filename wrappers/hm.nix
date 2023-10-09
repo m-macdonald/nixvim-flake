@@ -1,9 +1,11 @@
-{
+modules: {
   config,
+  pkgs,
   lib,
   ...
-}: let 
+} @args: let 
   inherit (lib) mkEnableOption mkOption mkMerge mkIf types;
+  shared = import ./_shared.nix modules args;
   cfg = config.programs.nixvim;
 in {
   options = {
@@ -20,19 +22,17 @@ in {
             };
           };
         }
-      ]);
+      ]
+      ++ shared.topLevelModules);
     };
   };
-/*
+
   config = mkIf cfg.enable (
     mkMerge [
-      {home.packages = [ import ./make { lsp = cfg.config; } ];}
+      {home.packages = [ cfg.finalPackage ];}
       {
         home.sessionVariables = mkIf cfg.defaultEditor { EDITOR = "nvim"; };
       }
     ]
-    );
-    */
-
-    config = 
+  );
 }

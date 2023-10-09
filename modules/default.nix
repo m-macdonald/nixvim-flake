@@ -121,6 +121,84 @@ in {
           silent = true;
         };
       }
+      # Telescope
+      {
+        mode = "n";
+        key = "<leader>?";
+        action = "require('telescope.builtin').oldFiles";
+        lua = true;
+        options = {
+          desc = "[?] Find recently opened files";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader><space>";
+        action = "require('telescope.builtin').buffers";
+        lua = true;
+        options = {
+          desc = "[ ] Find existing buffers";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>/";
+        action = ''
+          require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+            winblend = 10,
+            previewer = true,
+          })
+        '';
+        lua = true;
+        options = {
+          desc = "[/] Fuzzily search in current buffer";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>sf";
+        action = "require('telescope.builtin').find_files";
+        lua = true;
+        options = {
+          desc = "[S]earch [F]iles";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>sh";
+        action = "require('telescope.builtin').help_tags";
+        lua = true;
+        options = {
+          desc = "[S]earch [H]elp";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>sw";
+        action = "require('telescope.builtin').grep_string";
+        lua = true;
+        options = {
+          desc = "[S]earch current [W]ord";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>sg";
+        action = "require('telescope.builtin').live_grep";
+        lua = true;
+        options = {
+          desc = "[S]earch by [G]rep";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>sd";
+        action = "require('telescope.builtin').diagnostics";
+        lua = true;
+        options = {
+          desc = "[S]earch [D]iagnostics";
+        };
+      }
     ];
     plugins = {
       comment-nvim = {
@@ -144,17 +222,45 @@ in {
       # TODO: There are some keymaps I need to move over from my original config
       telescope = {
         enable = true;
+        extensions = {
+          fzf-native = {
+            enable = true;
+          };
+        };
       };
       # TODO: There is a lot of setup in my original that needs to be transferred here
       treesitter = {
         enable = true;
         indent = true;
+        incrementalSelection = {
+          enable = true;
+          keymaps = {
+            # TODO: reevaluate these mappings
+            initSelection = "<c-space>";
+            nodeIncremental = "<c-space>";
+            scopeIncremental = "<c-s>";
+            nodeDecremental = "<M-space>";
+          };
+        };
       };
       cmp-nvim-lsp = {
         enable = true;
       };
       nvim-cmp = {
         enable = true;
+        mapping = {
+          "<CR>" = ''
+            cmp.mapping.confirm (
+              {
+                behavior = cmp.ConfirmBehavior.Replace,
+                select = true,
+              }
+            )
+          '';
+          "<C-d>" = "cmp.mapping.scroll_docs(-4)";
+          "<C-f>" = "cmp.mapping.scroll_docs(4)";
+          "<C-Space>" = "cmp.mapping.complete()";
+        };
         sources = [
           { name = "nvim_lsp"; }
           { name = "path"; }
