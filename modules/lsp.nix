@@ -12,9 +12,11 @@ in {
     };
   };
 
-  plugins.lsp.servers = {
-    gopls = {
-      enable = true;
+  config = {
+    plugins.lsp.servers = {
+      gopls = {
+        enable = true;
+      };
     };
   };
 }

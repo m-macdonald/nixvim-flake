@@ -10,29 +10,33 @@
   outputs = { self, nixvim, flake-utils, nixpkgs } @inputs:
     with nixpkgs.lib;
     with builtins; let
-     # nixvimModules = map (f: ./modules + "/${f}") (attrNames (builtins.readDir ./modules));
-     modules = pkgs: 
-      [
-        rec {
-          _file = ./flake.nix;
-          key = _file;
-          config = {
-            _module.args = {
-              pkgs = mkForce pkgs;
-              inherit (pkgs) lib;
-              inherit inputs;
-            };
-          };
-        }
-      ];
+#      nixvimModules = map (f: ./modules + "/${f}") (attrNames (builtins.readDir ./modules));
+#      modules = pkgs:
+#       trace pkgs
+#      ;
+# #      nixvimModules;
+# /*      [
+#         rec {
+#           file = ./flake.nix;
+#           key = _file;
+#           config = {
+#             _module.args = {
+#               pkgs = mkForce pkgs;
+#               inherit (pkgs) lib;
+#               inherit inputs;
+#             };
+#           };
+#         }
+#       ];*/
     in flake-utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs { inherit system; };
-      make = import ./wrappers/make.nix;
-      # hmModule = import ./wrappers/hm.nix modules;
+      lib = pkgs.lib;
+      hmModule = import ./wrappers/hm.nix { inherit pkgs inputs lib; nvimConfig = import ./modules; };
+      standalonePackage = import ./wrappers/standalone.nix { inherit pkgs inputs lib; nvimConfig = import ./modules; };
     in {
       packages = {
-        default = import ./wrappers/standalone.nix pkgs modules {module = {};};
+         default = standalonePackage;
       };
-      homeManagerModules.nixvim = import ./wrappers/hm.nix modules;
+      homeManagerModules.nixvim = hmModule;
     });
 }

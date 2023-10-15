@@ -1,13 +1,12 @@
 {
+  nvimConfig,
   pkgs,
-  config,
   lib,
   inputs,
   ...
 }:
-with lib; let 
-
-in {
+/*
+with lib; {
   options = {
     finalPackage = mkOption {
       type = types.package;
@@ -17,15 +16,17 @@ in {
   };
 
   config = let 
-    nixvim' = inputs.nixvim.legacyPackages."${pkgs.system}";
+    nixvim' = inputs.nixvim.legacyPackages."x86_64-linux";
     # wrappedNixvim = import ../make.nix { inherit modules; lsp = config.config; };
-    wrappedNixvim = nixvim'.makeNixvimWithModule {
-      module = {};
-      pkgs = pkgs;
-#      module = config;
-    };
+    wrappedNixvim = nixvim'.makeNixvim nvimConfig;
   in {
     finalPackage = wrappedNixvim;
   };
 }
-
+*/
+let 
+  nixvim' = inputs.nixvim.legacyPackages."x86_64-linux";
+  # wrappedNixvim = import ../make.nix { inherit modules; lsp = config.config; };
+  wrappedNixvim = nixvim'.makeNixvim nvimConfig;
+in
+  wrappedNixvim

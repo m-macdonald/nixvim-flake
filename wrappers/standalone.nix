@@ -1,19 +1,25 @@
-default_pkgs: modules: {
-  pkgs ? default_pkgs,
-  module,
-}: let
+{
+  pkgs,
+  inputs,
+  nvimConfig,
+  lib
+} @args: let
   inherit (pkgs) lib;
 
-  shared = import ./_shared.nix modules {
-    inherit pkgs lib;
-    config = {};
-  };
+  shared = import ./_shared.nix args;
 
+  /*
   eval = lib.evalModules {
-    modules = [module] ++ shared.topLevelModules;
+     modules = shared.topLevelModules;
   };
+*/
+  # handleAssertions = config: let
+  #   failedAssertions = map (x: x.message) (lib.filter (x: !x.assertion) config.assertions);
+  # in
+  #   if failedAssertions != []
+  #   then throw "\nFailed assertions:\n${builtins.concatStringsSep "\n" (map (x: "- ${x}") failedAssertions)}"
+  #   else lib.showWarnings config.warnings config;
 
-  config = eval.config;
-  
+  # cfg = /* handleAssertions */ eval.config;
 in 
-  config.finalPackage
+  import ./modules/output.nix args

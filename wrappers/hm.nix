@@ -1,11 +1,16 @@
-modules: {
-  config,
+{
+  nvimConfig,
   pkgs,
   lib,
+  inputs,
+}:
+{
+  config,
   ...
-} @args: let 
+}: let 
   inherit (lib) mkEnableOption mkOption mkMerge mkIf types;
-  shared = import ./_shared.nix modules args;
+  # shared = import ./_shared.nix { inherit pkgs nvimConfig lib inputs; };
+  package = import ./modules/output.nix { inherit nvimConfig pkgs inputs lib; };
   cfg = config.programs.nixvim;
 in {
   options = {
@@ -16,20 +21,21 @@ in {
           options = {
             enable = mkEnableOption "nixvim";
             defaultEditor = mkEnableOption "Set nixvim as the default editor";
-            config = mkOption {
-              default = {};
-              description = "The desired LSP configuration";
-            };
+            # config = mkOption {
+            #   default = {};
+            #   description = "Add to or override the default configuration";
+            #   type = types.attrset;
+            # };
           };
         }
-      ]
-      ++ shared.topLevelModules);
+      ]);
+#      ++ shared.topLevelModules);
     };
   };
 
   config = mkIf cfg.enable (
     mkMerge [
-      {home.packages = [ cfg.finalPackage ];}
+      { home.packages = [ package ]; }
       {
         home.sessionVariables = mkIf cfg.defaultEditor { EDITOR = "nvim"; };
       }

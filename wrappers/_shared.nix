@@ -1,10 +1,11 @@
-modules: {
+{
   pkgs,
-  ...
-}:
+  nvimConfig,
+  lib,
+  inputs
+}: 
 {
   topLevelModules = [
-    ./modules/output.nix
-  ] 
-  ++ (modules pkgs);
+    import ./modules/output.nix { inherit pkgs nvimConfig lib inputs; }
+  ];
 }
