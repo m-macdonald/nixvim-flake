@@ -4,21 +4,40 @@
   inputs = {
     nixvim.url = "github:nix-community/nixvim";
     flake-utils.url = "github:numtide/flake-utils";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 
-  outputs = { self, nixvim, flake-utils }: 
-    flake-utils.lib.eachDefaultSystem (system: let
-      make = { lsp }: let 
-        nixvim' = nixvim.legacyPackages."${system}";
-        modules = import ./modules { conf = lsp; };
-#        module = modules // lsp;
-      in 
-        nixvim'.makeNixvimWithModule {
-          module = modules;
-        };
+  outputs = { self, nixvim, flake-utils, nixpkgs } @inputs:
+    with nixpkgs.lib;
+    with builtins; let
+#      nixvimModules = map (f: ./modules + "/${f}") (attrNames (builtins.readDir ./modules));
+#      modules = pkgs:
+#       trace pkgs
+#      ;
+# #      nixvimModules;
+# /*      [
+#         rec {
+#           file = ./flake.nix;
+#           key = _file;
+#           config = {
+#             _module.args = {
+#               pkgs = mkForce pkgs;
+#               inherit (pkgs) lib;
+#               inherit inputs;
+#             };
+#           };
+#         }
+#       ];*/
+    in flake-utils.lib.eachDefaultSystem (system: let
+      pkgs = import nixpkgs { inherit system; };
+      lib = pkgs.lib;
+      nvimConfig = import ./modules;
+      hmModule = import ./wrappers/hm.nix { inherit pkgs inputs lib nvimConfig; };
+      standalonePackage = import ./wrappers/standalone.nix { inherit pkgs inputs lib nvimConfig; };
     in {
-      legacyPackages = {
-        inherit make;
+      packages = {
+         default = standalonePackage;
       };
+      homeManagerModules.nixvim = hmModule;
     });
 }
