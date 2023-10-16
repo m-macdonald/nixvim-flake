@@ -31,8 +31,9 @@
     in flake-utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs { inherit system; };
       lib = pkgs.lib;
-      hmModule = import ./wrappers/hm.nix { inherit pkgs inputs lib; nvimConfig = import ./modules; };
-      standalonePackage = import ./wrappers/standalone.nix { inherit pkgs inputs lib; nvimConfig = import ./modules; };
+      nvimConfig = import ./modules;
+      hmModule = import ./wrappers/hm.nix { inherit pkgs inputs lib nvimConfig; };
+      standalonePackage = import ./wrappers/standalone.nix { inherit pkgs inputs lib nvimConfig; };
     in {
       packages = {
          default = standalonePackage;
