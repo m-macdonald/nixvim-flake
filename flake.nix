@@ -2,7 +2,7 @@
   description = "Baseline nixvim configuration to be used as an input to my project flakes";
 
   inputs = {
-    nixvim.url = "github:nix-community/nixvim";
+    nixvim.url = "github:m-macdonald/nixvim";
     flake-utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
