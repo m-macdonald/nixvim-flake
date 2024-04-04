@@ -37,12 +37,17 @@
         jsonls.enable = true;
         lua-ls.enable = true;
         nil_ls.enable = true;
-        ocaml-lsp.enable = true;
+        ocamllsp.enable = true;
         omnisharp.enable = true;
-        rust-analyzer.enable = true;
+        rust-analyzer = {
+            enable = true;
+            installRustc = false;
+            installCargo = false;
+        };
         svelte.enable = true;
         tailwindcss.enable = true;
         tsserver.enable = true;
+        templ.enable = true;
         yamlls.enable = true;
         zls.enable = true;
     };
