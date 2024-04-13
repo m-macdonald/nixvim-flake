@@ -3,7 +3,7 @@
         mapleader = " ";
         maplocalleader = " ";
     };
-    options = {
+    opts = {
         hlsearch = false;
         number = true;
         relativenumber = true;
