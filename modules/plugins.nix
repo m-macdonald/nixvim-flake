@@ -1,23 +1,27 @@
 {
-    comment-nvim = {
+    comment = {
         enable = true;
     };
     indent-blankline = {
         enable = true;
-        indent = {
-            char = "┊";
+        settings = {
+            indent = {
+                char = "┊";
+            };
+            scope.enabled = false;
         };
-        scope.enabled = false;
     };
 # TODO: Define the signs to use
     gitsigns = {
         enable = true;
-        signs = {
-            add.text = "+";
-            change.text = "~";
-            delete.text = "--";
-            topdelete.text = "‾";
-            changedelete.text = "~";
+        settings = {
+            signs = {
+                add.text = "+";
+                change.text = "~";
+                delete.text = "--";
+                topdelete.text = "‾";
+                changedelete.text = "~";
+            };
         };
     };
     which-key = {
@@ -89,28 +93,34 @@
     cmp-nvim-lsp = {
         enable = true;
     };
-    nvim-cmp = {
+    cmp = {
         enable = true;
-        snippet.expand = "luasnip";
-        mapping = {
-            "<CR>" = ''
-                cmp.mapping.confirm (
-                        {
-                        behavior = cmp.ConfirmBehavior.Replace,
-                        select = true,
-                        }
-                        )
-                '';
-            "<C-d>" = "cmp.mapping.scroll_docs(-4)";
-            "<C-f>" = "cmp.mapping.scroll_docs(4)";
-            "<C-Space>" = "cmp.mapping.complete()";
+        settings = {
+            snippet.expand = "function(args) require('luasnip').lsp_expand(args.body) end";
+            mapping = {
+                "<CR>" = ''
+                    cmp.mapping.confirm (
+                            {
+                            behavior = cmp.ConfirmBehavior.Replace,
+                            select = true,
+                            }
+                            )
+                    '';
+                "<C-d>" = "cmp.mapping.scroll_docs(-4)";
+                "<C-f>" = "cmp.mapping.scroll_docs(4)";
+                "<C-Space>" = "cmp.mapping.complete()";
+            };
+            # sources = {
+            #     __raw = ''
+            #         cmp.config.sources({
+            #             { name = 'nvim_lsp' },
+            #             { name = 'luasnip' },
+            #             { name = 'path' },
+            #             { name = 'buffer' }
+            #         })
+            #     '';
+            # };
         };
-        sources = [
-        { name = "nvim_lsp"; }
-        { name = "luasnip"; }
-        { name = "path"; }
-        { name = "buffer"; }
-        ];
     };
     treesitter-context = {
         enable = true;
