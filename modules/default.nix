@@ -11,6 +11,9 @@
         clipboard = "unnamedplus";
         breakindent = true;
         undofile = true;
+        swapfile = false;
+        backup = false;
+
 
         # Case insensitive searching unless /C or capital in search
         ignorecase = true;
@@ -23,15 +26,20 @@
 
         signcolumn = "yes";
 
-        updatetime = 250;
+        updatetime = 50;
         timeout = true;
         timeoutlen = 300;
 
         # Set completeopt to have a better completion experience
         completeopt = "menuone,noselect";
+
+        colorcolumn = "80";
     };
     colorschemes.catppuccin.enable = true;
     keymaps = import ./keymaps.nix;
+    filetype.extension =  {
+        "templ" = "templ";
+    };
     plugins = import ./plugins.nix;
     autoGroups = {
         yank_highlight = { clear = true; };
