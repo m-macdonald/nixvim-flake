@@ -99,5 +99,15 @@
         silent = true;
     };
 }
+{
+    mode = "n";
+    key = "<leader>tt";
+    action = "vim.cmd.TroubleToggle";
+    lua = true;
+    options = {
+        desc = "[T]oggle [T]rouble";
+        silent = true;
+    };
+}
 ]
 
