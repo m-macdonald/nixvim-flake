@@ -11,7 +11,6 @@
             scope.enabled = false;
         };
     };
-# TODO: Define the signs to use
     gitsigns = {
         enable = true;
         settings = {
@@ -21,6 +20,20 @@
                 delete.text = "--";
                 topdelete.text = "‾";
                 changedelete.text = "~";
+            };
+        };
+    };
+    harpoon = {
+        enable = true;
+        enableTelescope = true;
+        keymaps = {
+            addFile = "<leader>a";
+            toggleQuickMenu = "<C-e>";
+            navFile = {
+                "1" = "<C-t>";
+                "2" = "<C-s>";
+                "3" = "<C-r>";
+                "4" = "<C-a>";
             };
         };
     };
@@ -162,8 +175,4 @@
         settings.action_keys = {
         };
     };
-# harpoon = {
-#   enable = true;
-#   keymaps = {};
-# };
 }
