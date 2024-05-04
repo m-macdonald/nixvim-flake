@@ -29,6 +29,7 @@
     servers = {
         astro.enable = true;
         bashls.enable = true;
+        clangd.enable = true;
         csharp-ls.enable = true;
         cssls.enable = true;
         eslint.enable = true;
