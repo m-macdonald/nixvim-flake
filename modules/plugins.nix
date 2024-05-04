@@ -11,7 +11,6 @@
             scope.enabled = false;
         };
     };
-# TODO: Define the signs to use
     gitsigns = {
         enable = true;
         settings = {
@@ -21,6 +20,20 @@
                 delete.text = "--";
                 topdelete.text = "‾";
                 changedelete.text = "~";
+            };
+        };
+    };
+    harpoon = {
+        enable = true;
+        enableTelescope = true;
+        keymaps = {
+            addFile = "<leader>a";
+            toggleQuickMenu = "<C-e>";
+            navFile = {
+                "1" = "<C-t>";
+                "2" = "<C-s>";
+                "3" = "<C-r>";
+                "4" = "<C-a>";
             };
         };
     };
@@ -96,21 +109,29 @@
     cmp = {
         enable = true;
         settings = {
+            view = { name = "custom"; selection_order = "near_cursor";};
+            formatting = {
+                fields = [ "abbr" "kind" "menu" ];
+                format = ''
+                    function(entry, vim_item)
+                        vim_item.menu = nil
+
+                        return vim_item
+                    end'';
+            };
             snippet.expand = "function(args) require('luasnip').lsp_expand(args.body) end";
             mapping = {
                 "<CR>" = ''
-                    cmp.mapping.confirm (
-                            {
+                    cmp.mapping.confirm ({
                             behavior = cmp.ConfirmBehavior.Replace,
                             select = true,
-                            }
-                            )
-                    '';
+                    })'';
                 "<C-d>" = "cmp.mapping.scroll_docs(-4)";
                 "<C-f>" = "cmp.mapping.scroll_docs(4)";
                 "<C-Space>" = "cmp.mapping.complete()";
                 "<Tab>" = ''
                     cmp.mapping(function(fallback)
+                        luasnip = require('luasnip')
                         if cmp.visible() then
                             cmp.select_next_item()
                         elseif luasnip.expand_or_jumpable() then
@@ -122,6 +143,7 @@
                 '';
                 "<S-Tab>" = ''
                     cmp.mapping(function(fallback)
+                        luasnip = require('luasnip')
                         if cmp.visible() then
                             cmp.select_prev_item()
                         elseif luasnip.jumpable(-1) then
@@ -162,8 +184,4 @@
         settings.action_keys = {
         };
     };
-# harpoon = {
-#   enable = true;
-#   keymaps = {};
-# };
 }
