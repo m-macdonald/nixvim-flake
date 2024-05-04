@@ -157,6 +157,11 @@
     fugitive = {
         enable = true;
     };
+    trouble = {
+        enable = true;
+        settings.action_keys = {
+        };
+    };
 # harpoon = {
 #   enable = true;
 #   keymaps = {};
