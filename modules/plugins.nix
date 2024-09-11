@@ -45,7 +45,7 @@
     };
     lualine = {
         enable = true;
-        theme = "catppuccin";
+        settings.options.theme = "catpuccin";
     };
     telescope = {
         enable = true;
@@ -62,44 +62,46 @@
 # };
             "<leader><space>" = {
                 action = "buffers";
-                desc = "[ ] Find existing buffers";
+                options.desc = "[ ] Find existing buffers";
             };
 # "<leader>/" = {
 #   action = ""
 # };
             "<leader>sf" = {
                 action = "find_files";
-                desc = "[S]earch [F]iles";
+                options.desc = "[S]earch [F]iles";
             };
             "<leader>sh" = {
                 action = "help_tags";
-                desc = "[S]earch [H]elp";
+                options.desc = "[S]earch [H]elp";
             };
             "<leader>sw" = {
                 action = "grep_string";
-                desc = "[S]earch current [W]ord";
+                options.desc = "[S]earch current [W]ord";
             };
             "<leader>sg" = {
                 action = "live_grep";
-                desc = "[S]earch by [G]rep";
+                options.desc = "[S]earch by [G]rep";
             };
             "<leader>sd" = {
                 action = "diagnostics";
-                desc = "[S]earch [D]iagnostics";
+                options.desc = "[S]earch [D]iagnostics";
             };
         };
     };
     treesitter = {
         enable = true;
-        indent = true;
-        incrementalSelection = {
-            enable = true;
-            keymaps = {
+        settings = {
+            indent.enable = true;
+            incremental_selection = {
+                enable = true;
+                keymaps = {
 # TODO: reevaluate these mappings
-                initSelection = "<c-space>";
-                nodeIncremental = "<c-space>";
-                scopeIncremental = "<c-s>";
-                nodeDecremental = "<M-space>";
+                    init_selection = "<c-space>";
+                    node_incremental = "<c-space>";
+                    scope_incremental = "<c-s>";
+                    node_decremental = "<M-space>";
+                };
             };
         };
     };
