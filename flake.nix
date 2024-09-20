@@ -3,44 +3,47 @@
 
   inputs = {
     nixvim = {
-        url = "github:nix-community/nixvim";
-        inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
 
-  outputs = { self, nixvim, flake-utils, nixpkgs } @inputs:
+  outputs = {
+    self,
+    nixvim,
+    flake-utils,
+    nixpkgs,
+  }:
     with nixpkgs.lib;
-    with builtins; let
-#      nixvimModules = map (f: ./modules + "/${f}") (attrNames (builtins.readDir ./modules));
-#      modules = pkgs:
-#       trace pkgs
-#      ;
-# #      nixvimModules;
-# /*      [
-#         rec {
-#           file = ./flake.nix;
-#           key = _file;
-#           config = {
-#             _module.args = {
-#               pkgs = mkForce pkgs;
-#               inherit (pkgs) lib;
-#               inherit inputs;
-#             };
-#           };
-#         }
-#       ];*/
-    in flake-utils.lib.eachDefaultSystem (system: let
-      pkgs = import nixpkgs { inherit system; };
-      lib = pkgs.lib;
-      nvimConfig = import ./modules;
-      hmModule = import ./wrappers/hm.nix { inherit pkgs inputs lib nvimConfig; };
-      standalonePackage = import ./wrappers/standalone.nix { inherit pkgs inputs lib nvimConfig; };
-    in {
-      packages = {
-         default = standalonePackage;
-      };
-      homeManagerModules.nixvim = hmModule;
-    });
+    with builtins;
+      flake-utils.lib.eachDefaultSystem (system: let
+        nixvimLib = nixvim.lib.${system};
+        pkgs = import nixpkgs {inherit system;};
+        lib = pkgs.lib;
+        nvimConfig = import ./modules;
+        nixvim' = nixvim.legacyPackages.${system};
+        nvim = nixvim'.makeNixvimWithModule {
+          inherit pkgs;
+          module = nvimConfig;
+          extraSpecialArgs = {
+            inherit self;
+          };
+        };
+        hmModule = import ./wrappers/hm.nix {inherit nvim lib;};
+      in {
+        checks = {
+          default = nixvimLib.check.mkTestDerivationFromNvim {
+            inherit nvim;
+            name = "nixvim";
+          };
+        };
+        packages = {
+          default = nvim;
+        };
+        homeManagerModules.nixvim = hmModule;
+
+        formatter = pkgs.alejandra;
+      });
 }
