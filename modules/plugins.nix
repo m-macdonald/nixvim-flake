@@ -108,6 +108,9 @@
   cmp-nvim-lsp = {
     enable = true;
   };
+  web-devicons = {
+    enable = true;
+  };
   cmp = {
     enable = true;
     settings = {
@@ -186,7 +189,5 @@
   };
   trouble = {
     enable = true;
-    settings.action_keys = {
-    };
   };
 }
