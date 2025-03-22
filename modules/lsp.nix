@@ -30,24 +30,27 @@
     astro.enable = true;
     bashls.enable = true;
     clangd.enable = true;
-    csharp-ls.enable = true;
+    csharp_ls.enable = true;
     cssls.enable = true;
     eslint.enable = true;
     gopls.enable = true;
     html.enable = true;
     jsonls.enable = true;
-    lua-ls.enable = true;
-    nil-ls.enable = true;
-    ocamllsp.enable = true;
+    lua_ls.enable = true;
+    nil_ls.enable = true;
+    ocamllsp = {
+      enable = true;
+      package = null;
+    };
     omnisharp.enable = true;
-    rust-analyzer = {
+    rust_analyzer = {
       enable = true;
       installRustc = false;
       installCargo = false;
     };
     svelte.enable = true;
     tailwindcss.enable = true;
-    tsserver.enable = true;
+    ts_ls.enable = true;
     templ.enable = true;
     yamlls.enable = true;
     zls.enable = true;
