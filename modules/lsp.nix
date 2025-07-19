@@ -43,6 +43,7 @@
       package = null;
     };
     omnisharp.enable = true;
+    qmlls.enable = true;
     rust_analyzer = {
       enable = true;
       installRustc = false;
