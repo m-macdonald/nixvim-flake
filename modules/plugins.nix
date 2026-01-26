@@ -80,19 +80,6 @@
   };
   project-nvim = {
     enable = true;
-    settings = {
-        use_lsp = [
-            "lsp"
-            "pattern"
-        ];
-        patterns = [
-            ".git"
-            ".github"
-            ".csproj"
-            ".nvim.lua"
-        ];
-        showHidden = true;
-    };
   };
   treesitter = {
     enable = true;
@@ -109,6 +96,10 @@
         };
       };
     };
+  };
+  dap = {
+    enable = true;
+
   };
   web-devicons = {
     enable = true;
