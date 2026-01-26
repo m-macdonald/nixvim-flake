@@ -1,17 +1,20 @@
 [
   {
-    mode = ["n" "v"];
+    mode = [
+      "n"
+      "v"
+    ];
     key = "<Space>";
     action = "<Nop>";
     options = {
       silent = true;
     };
   }
-  # Open netrw
+  # Open Mini.files
   {
     mode = "n";
-    key = "<leader>fv";
-    action = ":Ex<cr>";
+    key = "-";
+    action = "<Cmd>lua require('mini.files').open()<CR>";
     options = {
       silent = true;
       desc = "Open [F]ile [V]iewer";
@@ -81,8 +84,7 @@
   {
     mode = "n";
     key = "<leader>fb";
-    action = "vim.lsp.buf.format";
-    lua = true;
+    action.__raw = "vim.lsp.buf.format";
     options = {
       desc = "[F]ormat [B]uffer";
       silent = true;
@@ -92,8 +94,7 @@
   {
     mode = "n";
     key = "<leader>gs";
-    action = "vim.cmd.Git";
-    lua = true;
+    action.__raw = "vim.cmd.Git";
     options = {
       desc = "[G]it [S]tatus";
       silent = true;
@@ -102,8 +103,7 @@
   {
     mode = "n";
     key = "<leader>tt";
-    action = "vim.cmd.TroubleToggle";
-    lua = true;
+    action.__raw = "vim.cmd.TroubleToggle";
     options = {
       desc = "[T]oggle [T]rouble";
       silent = true;

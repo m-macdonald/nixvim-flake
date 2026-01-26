@@ -35,7 +35,6 @@
   };
   lualine = {
     enable = true;
-    settings.options.theme = "catpuccin";
   };
   telescope = {
     enable = true;
@@ -79,6 +78,22 @@
       };
     };
   };
+  project-nvim = {
+    enable = true;
+    settings = {
+        use_lsp = [
+            "lsp"
+            "pattern"
+        ];
+        patterns = [
+            ".git"
+            ".github"
+            ".csproj"
+            ".nvim.lua"
+        ];
+        showHidden = true;
+    };
+  };
   treesitter = {
     enable = true;
     settings = {
@@ -95,79 +110,99 @@
       };
     };
   };
-  cmp-nvim-lsp = {
-    enable = true;
-  };
   web-devicons = {
     enable = true;
   };
-  cmp = {
+  blink-cmp = {
     enable = true;
     settings = {
-      view = {
-        name = "custom";
-        selection_order = "near_cursor";
+      completion = {
+        menu = {
+          enabled = true;
+        };
+        documentation.auto_show = true;
+        accept = {
+          auto_brackets.enabled = false;
+        };
+        ghost_text.enabled = true;
+        list.cycle = {
+          from_top = true;
+          from_bottom = true;
+        };
       };
-      formatting = {
-        fields = ["abbr" "kind" "menu"];
-        format = ''
-          function(entry, vim_item)
-              vim_item.menu = nil
-
-              return vim_item
-          end'';
+      sources = {
+        default = [
+          "lsp"
+          "path"
+          "snippets"
+          "buffer"
+        ];
       };
-      snippet.expand = "function(args) require('luasnip').lsp_expand(args.body) end";
-      mapping = {
-        "<CR>" = ''
-          cmp.mapping.confirm ({
-                  behavior = cmp.ConfirmBehavior.Replace,
-                  select = true,
-          })'';
-        "<C-d>" = "cmp.mapping.scroll_docs(-4)";
-        "<C-f>" = "cmp.mapping.scroll_docs(4)";
-        "<C-Space>" = "cmp.mapping.complete()";
-        "<Tab>" = ''
-          cmp.mapping(function(fallback)
-              luasnip = require('luasnip')
-              if cmp.visible() then
-                  cmp.select_next_item()
-              elseif luasnip.expand_or_jumpable() then
-                  luasnip.expand_or_jump()
-              else
-                  fallback()
-              end
-          end, {"i", "s"})
-        '';
-        "<S-Tab>" = ''
-          cmp.mapping(function(fallback)
-              luasnip = require('luasnip')
-              if cmp.visible() then
-                  cmp.select_prev_item()
-              elseif luasnip.jumpable(-1) then
-                  luasnip.jump(-1)
-              else
-                  fallback()
-              end
-          end, {"i", "s"})
-        '';
+      keymap = {
+        "<Esc>" = [
+          "cancel"
+          "fallback"
+        ];
+        "<C-y>" = [
+          "accept"
+          "fallback"
+        ];
+        "<C-space>" = [
+          "show_documentation"
+          "hide_documentation"
+        ];
+        "<C-Up>" = [
+          "scroll_documentation_up"
+        ];
+        "<C-Down>" = [
+          "scroll_documentation_down"
+        ];
+        "<Tab>" = [
+          "select_next"
+          "fallback"
+        ];
+        "<C-Tab>" = [
+          "select_prev"
+          "fallback"
+        ];
       };
-      sources = [
-        {name = "nvim_lsp";}
-        {name = "luasnip";}
-        {name = "path";}
-        {name = "buffer";}
-      ];
-      window = {
-        completion.border = ["┌" "─" "┐" "│" "┘" "─" "└" "│"];
-        documentation.border = ["┌" "─" "┐" "│" "┘" "─" "└" "│"];
+    };
+  };
+  mini-files = {
+    enable = true;
+    settings = {
+      mappings = {
+        close = "q";
+        # Expand the current dir, or open current file
+        go_in = "l";
+        # Same as go_in, but closes Minifiles
+        go_in_plus = "L";
+        # Focus on the parent dir
+        go_out = "h";
+        # Same as go_out, but closes directories to the left
+        go_out_plus = "H";
+        reset = "<BS>";
+        # Write the changes to the directory buffers to the filesystem
+        synchronize = "w";
+        trim_left = "<";
+        trim_right = ">";
+      };
+      options = {
+        permanent_delete = true;
+        use_as_default_explorer = true;
+      };
+      windows = {
+        # Functionally no limit on the number of windows shown side by side
+        max_number.__raw = "math.huge";
+        # Show a preview of the file or directory under the cursor
+        preview = true;
+        width_focus = 50;
+        width_nofocus = 15;
+        width_preview = 50;
       };
     };
   };
   treesitter-context = {
-    enable = true;
-  };
-  cmp_luasnip = {
     enable = true;
   };
   luasnip = {
