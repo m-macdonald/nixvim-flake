@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   globals = {
     mapleader = " ";
     maplocalleader = " ";
@@ -6,10 +7,10 @@
   opts = {
     hlsearch = false;
     number = true;
+    cursorline = true;
     relativenumber = true;
     termguicolors = true;
     clipboard = "unnamedplus";
-    breakindent = true;
     undofile = true;
     swapfile = false;
     backup = false;
@@ -34,18 +35,25 @@
 
     colorcolumn = "80";
   };
-  colorschemes.catppuccin.enable = true;
+  colorschemes.one = {
+    enable = true;
+    settings = {
+      allow-italics = 1;
+    };
+  };
   keymaps = import ./keymaps.nix;
   filetype.extension = {
     "templ" = "templ";
   };
   plugins = import ./plugins.nix;
   autoGroups = {
-    yank_highlight = {clear = true;};
+    yank_highlight = {
+      clear = true;
+    };
   };
   autoCmd = [
     {
-      event = ["TextYankPost"];
+      event = [ "TextYankPost" ];
       callback = {
         __raw = ''
           function()
@@ -54,17 +62,8 @@
         '';
       };
       group = "yank_highlight";
-      pattern = ["*"];
+      pattern = [ "*" ];
     }
   ];
-  # extraPlugins = [
-  #     (buildVimPlugin {
-  #         pname = "nuget-nvim";
-  #         version = "2024-09-20";
-  #         src = fs.oSource {
-  #             root = ../../nuget-nvim;
-  #             fileset = ./.;
-  #         };
-  #     })
-  # ];
+  dependencies.ripgrep.enable = true;
 }
