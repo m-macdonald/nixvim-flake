@@ -84,7 +84,11 @@
   {
     mode = "n";
     key = "<leader>fb";
-    action.__raw = "vim.lsp.buf.format";
+    action.__raw = ''
+      function()
+          require('conform').format({ async = true, lsp_format = 'fallback', range = nil })
+      end
+    '';
     options = {
       desc = "[F]ormat [B]uffer";
       silent = true;
@@ -100,12 +104,99 @@
       silent = true;
     };
   }
+  # LSP Diagnostics
   {
     mode = "n";
     key = "<leader>tt";
-    action.__raw = "vim.cmd.TroubleToggle";
+    action = "<CMD>Trouble diagnostics toggle<CR>";
     options = {
       desc = "[T]oggle [T]rouble";
+      silent = true;
+    };
+  }
+  # Debugging
+  {
+    mode = "n";
+    key = "<leader>b";
+    action.__raw = "vim.cmd.DapToggleBreakpoint";
+    options = {
+      desc = "[B]reakpoint";
+      silent = true;
+    };
+  }
+  {
+    mode = "n";
+    key = "<leader>gb";
+    action.__raw = "require('dap').run_to_cursor";
+    options = {
+      desc = "Go to Cursor";
+      silent = true;
+    };
+  }
+  {
+    mode = "n";
+    key = "<F1>";
+    action.__raw = "vim.cmd.DapContinue";
+    options = {
+      desc = "Continue";
+      silent = true;
+    };
+  }
+  {
+    mode = "n";
+    key = "<F2>";
+    action.__raw = "vim.cmd.DapStepInto";
+    options = {
+      desc = "Step Into";
+      silent = true;
+    };
+  }
+  {
+    mode = "n";
+    key = "<F3>";
+    action.__raw = "vim.cmd.DapStepOver";
+    options = {
+      desc = "Step Over";
+      silent = true;
+    };
+  }
+  {
+    mode = "n";
+    key = "<F4>";
+    action.__raw = "vim.cmd.DapStepOut";
+    options = {
+      desc = "Step Out";
+      silent = true;
+    };
+  }
+  {
+    mode = "n";
+    key = "<F5>";
+    action.__raw = "vim.cmd.DapStepBack";
+    options = {
+      desc = "Step Back";
+      silent = true;
+    };
+  }
+  {
+    mode = "n";
+    key = "<F12>";
+    action.__raw = "require('dap').restart";
+    options = {
+      desc = "Restart Debugging";
+      silent = true;
+    };
+  }
+  {
+    mode = "n";
+    key = "<leader>?";
+    action.__raw = ''
+      function()
+          require("dapui").eval(nil, {enter = true})
+      end
+    '';
+    options = {
+      desc = "Evaluate variable under cursor";
       silent = true;
     };
   }

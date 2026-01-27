@@ -1,5 +1,4 @@
-{ ... }:
-{
+{pkgs, ...}: {
   globals = {
     mapleader = " ";
     maplocalleader = " ";
@@ -23,6 +22,7 @@
     shiftwidth = 4;
     expandtab = true;
     smartindent = true;
+    autoindent = true;
 
     signcolumn = "yes";
 
@@ -34,18 +34,18 @@
     completeopt = "menuone,noselect";
 
     colorcolumn = "80";
+
+    background = null;
   };
-  colorschemes.one = {
+  colorschemes.kanagawa-paper = {
     enable = true;
-    settings = {
-      allow-italics = 1;
-    };
+    settings.theme = "ink";
   };
   keymaps = import ./keymaps.nix;
   filetype.extension = {
     "templ" = "templ";
   };
-  plugins = import ./plugins.nix;
+  plugins = import ./plugins pkgs;
   autoGroups = {
     yank_highlight = {
       clear = true;
@@ -53,17 +53,32 @@
   };
   autoCmd = [
     {
-      event = [ "TextYankPost" ];
+      event = ["TextYankPost"];
       callback = {
         __raw = ''
           function()
-          vim.highlight.on_yank()
+            vim.highlight.on_yank()
           end
         '';
       };
       group = "yank_highlight";
-      pattern = [ "*" ];
+      pattern = ["*"];
     }
   ];
   dependencies.ripgrep.enable = true;
+  extraPackages = with pkgs; [
+    # Required for go debugging
+    delve
+    gcc
+    # Linters
+    biome
+    clippy
+    codespell
+    deadnix
+    golangci-lint
+    hadolint
+    markdownlint-cli
+    nix
+    yamllint
+  ];
 }
