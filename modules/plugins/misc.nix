@@ -1,16 +1,15 @@
+{lib, ...}:
 {
-  comment = {
-    enable = true;
-  };
+  comment.enable = true;
+
   indent-blankline = {
     enable = true;
     settings = {
-      indent = {
-        char = "┊";
-      };
+      indent.char = "┊";
       scope.enabled = false;
     };
   };
+
   gitsigns = {
     enable = true;
     settings = {
@@ -23,52 +22,98 @@
       };
     };
   };
-  harpoon = {
+
+  marks = {
     enable = true;
-    enableTelescope = true;
+    settings = {
+      default_mappings = true;
+      builtin_marks = ["."];
+      cyclic = true;
+      refresh_interval = 250;
+      sign_priority = {
+        lower = 10;
+        upper = 15;
+        builtin = 8;
+        bookmark = 20;
+      };
+    };
   };
+ 
   which-key = {
     enable = true;
+    settings.spec = [
+      {
+        __unkeyed-1 = "<leader>b";
+        group = "Buffer";
+      }
+      {
+        __unkeyed-1 = "<leader>d";
+        group = "Debug";
+      }
+      {
+        __unkeyed-1 = "<leader>g";
+        group = "Git";
+      }
+      {
+        __unkeyed-1 = "<leader>m";
+        group = "Marks";
+      }
+      {
+        __unkeyed-1 = "<leader>s";
+        group = "Search";
+      }
+      {
+        __unkeyed-1 = "<leader>t";
+        group = "Trouble";
+      }
+    ];
   };
-  fidget = {
+
+  fidget.enable = true;
+
+  lualine.enable = true;
+
+  project-nvim.enable = true;
+
+  web-devicons.enable = true;
+
+  lazygit = {
     enable = true;
+    settings = {
+      config_file_path = lib.nixvim.emptyTable;
+      floating_window_border_chars = [
+        "╭"
+        "─"
+        "╮"
+        "│"
+        "╯"
+        "─"
+        "╰"
+        "│"
+      ];
+    };
   };
-  lualine = {
-    enable = true;
-  };
-  project-nvim = {
-    enable = true;
-  };
-  web-devicons = {
-    enable = true;
-  };
+
   mini-files = {
     enable = true;
     settings = {
       mappings = {
         close = "q";
-        # Expand the current dir, or open current file
         go_in = "l";
-        # Same as go_in, but closes Minifiles
         go_in_plus = "L";
-        # Focus on the parent dir
         go_out = "h";
-        # Same as go_out, but closes directories to the left
         go_out_plus = "H";
         reset = "<BS>";
-        # Write the changes to the directory buffers to the filesystem
         synchronize = "w";
         trim_left = "<";
         trim_right = ">";
       };
       options = {
-        permanent_delete = true;
+        permanent_delete = false;
         use_as_default_explorer = true;
       };
       windows = {
-        # Functionally no limit on the number of windows shown side by side
         max_number.__raw = "math.huge";
-        # Show a preview of the file or directory under the cursor
         preview = true;
         width_focus = 50;
         width_nofocus = 15;
@@ -76,9 +121,16 @@
       };
     };
   };
-  fugitive = {
+
+  mini-pairs.enable = true;
+
+  mini-surround.enable = true;
+
+  todo-comments = {
     enable = true;
+    settings.signs = true;
   };
+
   trouble = {
     enable = true;
     settings = {

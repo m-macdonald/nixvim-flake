@@ -1,24 +1,16 @@
 {
   telescope = {
     enable = true;
-    extensions = {
-      fzf-native = {
-        enable = true;
-      };
-    };
+    extensions.fzf-native.enable = true;
     keymaps = {
-      # Broken right now. I don't use it enough to figure out what I've done wrong
-      # "<leader>?" = {
-      #   action = "old_files";
-      #   desc = "[?] Find recently opened files";
-      # };
       "<leader><space>" = {
         action = "buffers";
         options.desc = "[ ] Find existing buffers";
       };
-      # "<leader>/" = {
-      #   action = ""
-      # };
+      "<leader>/" = {
+        action = "current_buffer_fuzzy_find";
+        options.desc = "[/] Fuzzy search current buffer";
+      };
       "<leader>sf" = {
         action = "find_files";
         options.desc = "[S]earch [F]iles";
@@ -26,6 +18,10 @@
       "<leader>sh" = {
         action = "help_tags";
         options.desc = "[S]earch [H]elp";
+      };
+      "<leader>sk" = {
+        action = "keymaps";
+        options.desc = "[S]earch [K]eymaps";
       };
       "<leader>sw" = {
         action = "grep_string";
@@ -38,6 +34,10 @@
       "<leader>sd" = {
         action = "diagnostics";
         options.desc = "[S]earch [D]iagnostics";
+      };
+      "<leader>sr" = {
+        action = "oldfiles";
+        options.desc = "[S]earch [R]ecent";
       };
     };
   };

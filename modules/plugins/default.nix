@@ -1,9 +1,9 @@
-{pkgs, ...}:
-import ./misc.nix
-// import ./debugger.nix pkgs
-// import ./treesitter.nix
-// import ./lsp.nix
-// import ./completion.nix
-// import ./telescope.nix
-// import ./format.nix
-// import ./lint.nix
+{...}@args:
+  import ./misc.nix args
+  // import ./debugger.nix args
+  // import ./treesitter.nix
+  // import ./lsp.nix
+  // import ./completion.nix
+  // import ./telescope.nix
+  // import ./format.nix
+  // import ./lint.nix

@@ -1,11 +1,6 @@
 {
   lsp = {
     enable = true;
-    onAttach = ''
-      vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-              vim.lsp.buf.format()
-              end, {desc = 'Format current buffer with LSP'})
-    '';
     keymaps = {
       diagnostic = {
         "[d" = "goto_prev";
@@ -16,9 +11,7 @@
       lspBuf = {
         "<leader>rn" = "rename";
         "<leader>ca" = "code_action";
-
         "gd" = "definition";
-        #TODO: Original config uses telescope to do this. might switch back to that depending on results
         "gr" = "references";
         "gi" = "implementation";
         "gt" = "type_definition";
@@ -26,7 +19,6 @@
         "<C-k>" = "signature_help";
       };
     };
-
     servers = {
       astro.enable = true;
       bashls.enable = true;
@@ -57,6 +49,5 @@
       yamlls.enable = true;
       zls.enable = true;
     };
-    # };
   };
 }

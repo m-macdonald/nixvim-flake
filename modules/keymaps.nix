@@ -1,110 +1,102 @@
 [
   {
-    mode = [
-      "n"
-      "v"
-    ];
+    mode = ["n" "v"];
     key = "<Space>";
     action = "<Nop>";
-    options = {
-      silent = true;
-    };
+    options.silent = true;
   }
-  # Open Mini.files
+  # File explorer
   {
     mode = "n";
     key = "-";
     action = "<Cmd>lua require('mini.files').open()<CR>";
     options = {
       silent = true;
-      desc = "Open [F]ile [V]iewer";
+      desc = "Open File Explorer";
     };
   }
-  # Stay in visual mode when tabbing
+  # Visual indent
   {
     mode = "v";
     key = "<S-Tab>";
     action = "<gv";
-    options = {
-      silent = true;
-    };
+    options.silent = true;
   }
   {
     mode = "v";
     key = "<Tab>";
     action = ">gv";
-    options = {
-      silent = true;
-    };
+    options.silent = true;
   }
-  # Split current buffer
+  # Buffer splits
   {
     mode = "n";
-    key = "<leader>sb";
+    key = "<leader>bh";
     action = "<C-w>s";
     options = {
-      desc = "[S]plit [B]uffer";
+      desc = "[B]uffer Split [H]orizontal";
       silent = true;
     };
   }
-  # Navigate split buffers
+  {
+    mode = "n";
+    key = "<leader>bv";
+    action = "<C-w>v";
+    options = {
+      desc = "[B]uffer Split [V]ertical";
+      silent = true;
+    };
+  }
+  # Window navigation
   {
     mode = "n";
     key = "<C-n>";
     action = "<C-w>h";
-    options = {
-      silent = true;
-    };
+    options.silent = true;
   }
   {
     mode = "n";
     key = "<C-e>";
     action = "<C-w>j";
-    options = {
-      silent = true;
-    };
+    options.silent = true;
   }
   {
     mode = "n";
     key = "<C-i>";
     action = "<C-w>k";
-    options = {
-      silent = true;
-    };
+    options.silent = true;
   }
   {
     mode = "n";
     key = "<C-o>";
     action = "<C-w>l";
-    options = {
-      silent = true;
-    };
+    options.silent = true;
   }
-  # Formatting
+  # Format buffer
   {
     mode = "n";
-    key = "<leader>fb";
+    key = "<leader>bf";
     action.__raw = ''
       function()
-          require('conform').format({ async = true, lsp_format = 'fallback', range = nil })
+        require('conform').format({ async = true, lsp_format = 'fallback' })
       end
     '';
     options = {
-      desc = "[F]ormat [B]uffer";
+      desc = "[B]buffer [F]ormat";
       silent = true;
     };
   }
   # Git
   {
     mode = "n";
-    key = "<leader>gs";
-    action.__raw = "vim.cmd.Git";
+    key = "<leader>gg";
+    action = "<cmd>LazyGit<cr>";
     options = {
-      desc = "[G]it [S]tatus";
+      desc = "[G]it [G]ui";
       silent = true;
     };
   }
-  # LSP Diagnostics
+  # Trouble
   {
     mode = "n";
     key = "<leader>tt";
@@ -114,31 +106,50 @@
       silent = true;
     };
   }
-  # Debugging
+  # Marks
   {
     mode = "n";
-    key = "<leader>b";
-    action.__raw = "vim.cmd.DapToggleBreakpoint";
+    key = "<leader>ml";
+    action.__raw = "require('telescope.builtin').marks";
     options = {
-      desc = "[B]reakpoint";
+      desc = "[M]arks [L]ist";
       silent = true;
     };
   }
   {
     mode = "n";
-    key = "<leader>gb";
+    key = "<leader>md";
+    action.__raw = "require('marks').delete_line";
+    options = {
+      desc = "[M]arks [D]elete";
+      silent = true;
+    };
+  }
+  # Debug
+  {
+    mode = "n";
+    key = "<leader>db";
+    action.__raw = "vim.cmd.DapToggleBreakpoint";
+    options = {
+      desc = "[D]ebug [B]reakpoint";
+      silent = true;
+    };
+  }
+  {
+    mode = "n";
+    key = "<leader>dc";
     action.__raw = "require('dap').run_to_cursor";
     options = {
-      desc = "Go to Cursor";
+      desc = "[D]ebug Run to [C]ursor";
       silent = true;
     };
   }
   {
     mode = "n";
     key = "<F1>";
-    action.__raw = "vim.cmd.DapContinue";
+    action.__raw = "_G.smart_debug";
     options = {
-      desc = "Continue";
+      desc = "Debug: Start";
       silent = true;
     };
   }
@@ -147,7 +158,7 @@
     key = "<F2>";
     action.__raw = "vim.cmd.DapStepInto";
     options = {
-      desc = "Step Into";
+      desc = "Debug: Step Into";
       silent = true;
     };
   }
@@ -156,7 +167,7 @@
     key = "<F3>";
     action.__raw = "vim.cmd.DapStepOver";
     options = {
-      desc = "Step Over";
+      desc = "Debug: Step Over";
       silent = true;
     };
   }
@@ -165,7 +176,7 @@
     key = "<F4>";
     action.__raw = "vim.cmd.DapStepOut";
     options = {
-      desc = "Step Out";
+      desc = "Debug: Step Out";
       silent = true;
     };
   }
@@ -174,7 +185,7 @@
     key = "<F5>";
     action.__raw = "vim.cmd.DapStepBack";
     options = {
-      desc = "Step Back";
+      desc = "Debug: Step Back";
       silent = true;
     };
   }
@@ -183,20 +194,20 @@
     key = "<F12>";
     action.__raw = "require('dap').restart";
     options = {
-      desc = "Restart Debugging";
+      desc = "Debug: Restart";
       silent = true;
     };
   }
   {
     mode = "n";
-    key = "<leader>?";
+    key = "<leader>de";
     action.__raw = ''
       function()
-          require("dapui").eval(nil, {enter = true})
+        require("dapui").eval(nil, { enter = true })
       end
     '';
     options = {
-      desc = "Evaluate variable under cursor";
+      desc = "[D]ebug [E]valuate Expression";
       silent = true;
     };
   }

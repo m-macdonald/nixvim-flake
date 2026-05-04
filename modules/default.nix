@@ -1,20 +1,20 @@
-{pkgs, ...}: {
+{pkgs, ...}@args: {
   globals = {
     mapleader = " ";
     maplocalleader = " ";
   };
+
   opts = {
-    hlsearch = false;
     number = true;
-    cursorline = true;
     relativenumber = true;
+    cursorline = true;
+    hlsearch = false;
     termguicolors = true;
     clipboard = "unnamedplus";
     undofile = true;
     swapfile = false;
     backup = false;
 
-    # Case insensitive searching unless /C or capital in search
     ignorecase = true;
     smartcase = true;
 
@@ -22,54 +22,60 @@
     shiftwidth = 4;
     expandtab = true;
     smartindent = true;
-    autoindent = true;
 
     signcolumn = "yes";
+    scrolloff = 8;
+    wrap = false;
+    splitright = true;
+    splitbelow = true;
 
     updatetime = 50;
-    timeout = true;
     timeoutlen = 300;
 
-    # Set completeopt to have a better completion experience
     completeopt = "menuone,noselect";
-
     colorcolumn = "80";
-
-    background = null;
   };
+
   colorschemes.kanagawa-paper = {
     enable = true;
     settings.theme = "ink";
   };
+
   keymaps = import ./keymaps.nix;
-  filetype.extension = {
-    "templ" = "templ";
-  };
-  plugins = import ./plugins pkgs;
-  autoGroups = {
-    yank_highlight = {
-      clear = true;
-    };
-  };
+
+  filetype.extension."templ" = "templ";
+
+  plugins = import ./plugins args;
+
+  autoGroups.yank_highlight.clear = true;
+
   autoCmd = [
     {
       event = ["TextYankPost"];
-      callback = {
-        __raw = ''
-          function()
-            vim.highlight.on_yank()
-          end
-        '';
-      };
+      callback.__raw = ''
+        function()
+          vim.highlight.on_yank()
+        end
+      '';
       group = "yank_highlight";
       pattern = ["*"];
     }
   ];
-  dependencies.ripgrep.enable = true;
+
+  dependencies = {
+    ripgrep.enable = true;
+    lazygit.enable = true;
+  };
+
   extraPackages = with pkgs; [
-    # Required for go debugging
     delve
     gcc
+    # Formatters
+    alejandra
+    cbfmt
+    gofumpt
+    prettier
+    stylua
     # Linters
     biome
     clippy

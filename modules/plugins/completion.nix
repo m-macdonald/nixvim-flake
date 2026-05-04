@@ -25,7 +25,8 @@
         ];
       };
       keymap = {
-        "<Esc>" = [
+        "preset" = "none";
+        "<C-q>" = [
           "cancel"
           "fallback"
         ];
@@ -34,6 +35,7 @@
           "fallback"
         ];
         "<C-space>" = [
+          "show"
           "show_documentation"
           "hide_documentation"
         ];
