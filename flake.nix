@@ -20,11 +20,10 @@
       nixvimLib = nixvim.lib.${system};
       pkgs = import nixpkgs {inherit system;};
       lib = pkgs.lib;
-      nvimConfig = import ./modules pkgs;
       nixvim' = nixvim.legacyPackages.${system};
       nvim = nixvim'.makeNixvimWithModule {
         inherit pkgs;
-        module = nvimConfig;
+        module = import ./modules;
         extraSpecialArgs = {
           inherit self;
         };

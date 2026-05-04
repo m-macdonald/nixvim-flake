@@ -25,7 +25,8 @@
         ];
       };
       keymap = {
-        "<Esc>" = [
+        "preset" = "none";
+        "<Q>" = [
           "cancel"
           "fallback"
         ];

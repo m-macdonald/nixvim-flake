@@ -1,28 +1,23 @@
 {
   conform-nvim = {
     enable = true;
-    autoInstall.enable = true;
-    settings = {
-      formatters_by_ft = {
-        nix = ["alejandra"];
-        md = ["cbfmt"];
-        cs = ["csharpier"];
-        css = ["css_beautify"];
-        json = ["fixjson"];
-        go = ["gofumpt"];
-        html = ["html_beautify"];
-        Dockerfile = ["dockerfmt"];
-        lua = ["lua-format"];
-        js = ["prettier"];
-        ts = ["prettier"];
-        jsx = ["prettier"];
-        tsx = ["prettier"];
-        yml = ["prettier"];
-        yaml = ["prettier"];
-        rs = ["rustfmt"];
-        templ = ["templ"];
-        "*" = ["codespell"];
-      };
+    settings.formatters_by_ft = {
+      nix = ["alejandra"];
+      markdown = ["prettier"];
+      cs = ["csharpier"];
+      css = ["prettier"];
+      json = ["fixjson"];
+      go = ["gofumpt"];
+      html = ["prettier"];
+      lua = ["stylua"];
+      javascript = ["prettier"];
+      typescript = ["prettier"];
+      javascriptreact = ["prettier"];
+      typescriptreact = ["prettier"];
+      yaml = ["prettier"];
+      rust = ["rustfmt"];
+      templ = ["templ"];
+      "*" = ["codespell"];
     };
   };
 }

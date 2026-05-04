@@ -2,11 +2,11 @@
   treesitter = {
     enable = true;
     settings = {
-      indent.enable = true;
+      highlight.enable = true;
+      indent.enable = false;
       incremental_selection = {
         enable = true;
         keymaps = {
-          # TODO: reevaluate these mappings
           init_selection = "<c-space>";
           node_incremental = "<c-space>";
           scope_incremental = "<c-s>";
@@ -15,7 +15,6 @@
       };
     };
   };
-  treesitter-context = {
-    enable = true;
-  };
+  treesitter-context.enable = true;
+  ts-autotag.enable = true;
 }
